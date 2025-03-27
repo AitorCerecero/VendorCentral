@@ -4,4 +4,6 @@ module com.ruhrpumpen.vendorcentral {
 
     opens com.ruhrpumpen.vendorcentral to javafx.fxml;
     exports com.ruhrpumpen.vendorcentral;
+    exports com.ruhrpumpen.vendorcentral.controller;
+    opens com.ruhrpumpen.vendorcentral.controller to javafx.fxml;
 }
