@@ -4,35 +4,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.*?>
 
-<VBox alignment="CENTER" prefHeight="384.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ruhrpumpen.vendorcentral.MainController">
+<VBox alignment="CENTER" prefHeight="517.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ruhrpumpen.vendorcentral.MainController">
    <ImageView fitHeight="105.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@RP%20LOGO.png" />
       </image></ImageView>
-    <HBox prefWidth="458.0" spacing="8.0" VBox.vgrow="ALWAYS">
-        <TextField promptText="Vendor" HBox.hgrow="ALWAYS">
-           <HBox.margin>
-               <Insets />
-           </HBox.margin>
-           <padding>
-               <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-           </padding>
-        </TextField>
-        <Button mnemonicParsing="false">
-           <graphic>
-               <FontIcon iconLiteral="fas-search" />
-           </graphic>
-           <padding>
-               <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-           </padding>
-        </Button>
+    <HBox prefHeight="0.0" prefWidth="694.0" spacing="8.0" VBox.vgrow="ALWAYS">
       <VBox.margin>
          <Insets bottom="8.0" />
       </VBox.margin>
     </HBox>
-   <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+   <TableView prefHeight="200.0" prefWidth="694.0" VBox.vgrow="ALWAYS">
      <columns>
        <TableColumn prefWidth="75.0" text="C1" />
        <TableColumn prefWidth="75.0" text="C2" />
