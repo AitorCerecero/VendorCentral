@@ -40,6 +40,9 @@ dependencies {
     implementation("org.kordamp.ikonli:ikonli-javafx")
     implementation("org.kordamp.ikonli:ikonli-fontawesome5-pack")
 
+    // DB
+    implementation("org.xerial:sqlite-jdbc:3.49.1.0")
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
