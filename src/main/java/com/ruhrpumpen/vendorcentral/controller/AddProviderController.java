@@ -5,6 +5,9 @@ import com.ruhrpumpen.vendorcentral.model.ListDetail;
 import com.ruhrpumpen.vendorcentral.navigation.Navigator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +16,19 @@ import java.util.UUID;
 
 public class AddProviderController implements Initializable {
 
+    public Button addProviderButton;
     private ListDetailDao listDetailDao;
+
+    @FXML private TextField providerNameField;
+    @FXML private TextField categoryField;
+    @FXML private TextField locationField;
+    @FXML private TextField primaryContactField;
+    @FXML private TextField secondaryContactField;
+    @FXML private TextField phoneField;
+    @FXML private TextField emailField;
+    @FXML private TextField secondaryPhoneField;
+    @FXML private TextField secondaryEmailField;
+    @FXML private TextArea commentsField;
 
     @FXML
     public void goToMain() throws IOException {
@@ -23,40 +38,52 @@ public class AddProviderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         listDetailDao = new ListDetailDao(); // Inicializa el ListDetailsDAO
-
-        // Crear un nuevo ListDetails cada vez que se inicializa el controlador
-        crearNuevoListDetails();
     }
 
-    private void crearNuevoListDetails() {
-        // Generar valores de ejemplo para el nuevo ListDetails
-        String nuevoVendor = "Vendor-" + UUID.randomUUID().toString().substring(0, 8);
-        String nuevaLocation = "Location-" + UUID.randomUUID().toString().substring(0, 8);
-        String nuevoPrimaryContact = "Contacto-" + UUID.randomUUID().toString().substring(0, 8);
-        String nuevoContactPerson = "Persona-" + UUID.randomUUID().toString().substring(0, 8);
-        String nuevoStandard = "Standard-" + UUID.randomUUID().toString().substring(0, 4);
-        String nuevoTelephone = "Tel-" + UUID.randomUUID().toString().substring(0, 6);
-        String nuevoSecondaryContact = "Sec-" + UUID.randomUUID().toString().substring(0, 8);
-        String nuevoSecondaryTelephone = "SecTel-" + UUID.randomUUID().toString().substring(0, 6);
-        String nuevoSecondaryEmail = UUID.randomUUID().toString().substring(0, 10) + "@example.com";
+    @FXML
+    private void onAddProviderClick() {
+        String name = providerNameField.getText();
+        String category = categoryField.getText();
+        String location = locationField.getText();
+        String primaryContact = primaryContactField.getText();
+        String secondaryContact = secondaryContactField.getText();
+        String phone = phoneField.getText();
+        String email = emailField.getText();
+        String secondaryPhone = secondaryPhoneField.getText();
+        String secondaryEmail = secondaryEmailField.getText();
+        String comments = commentsField.getText();
 
-        // Crear un nuevo objeto ListDetails
-        ListDetail nuevoDetalle = new ListDetail(
-                nuevoVendor,
-                nuevaLocation,
-                nuevoPrimaryContact,
-                nuevoContactPerson,
-                nuevoStandard,
-                nuevoTelephone,
-                nuevoSecondaryContact,
-                nuevoSecondaryTelephone,
-                nuevoSecondaryEmail
+        if (name.isBlank() || location.isBlank()) {
+            System.out.println("Faltan campos obligatorios.");
+            return;
+        }
+
+        ListDetail nuevoProveedor = new ListDetail(
+                name,
+                location,
+                primaryContact,
+                secondaryContact,
+                category, // Puedes usar este campo como estándar o ajustarlo
+                phone,
+                email,
+                secondaryPhone,
+                secondaryEmail
         );
 
-        // Guardar el nuevo ListDetails en la base de datos
-        listDetailDao.createListDetail(nuevoDetalle);
+        listDetailDao.createListDetail(nuevoProveedor);
 
-        System.out.println("Nuevo ListDetails creado para Vendor: " + nuevoVendor + ", Location: " + nuevaLocation);
-        // O podrías mostrar una notificación al usuario
+        System.out.println("Proveedor agregado: " + name);
+
+        // Limpia los campos
+        providerNameField.clear();
+        categoryField.clear();
+        locationField.clear();
+        primaryContactField.clear();
+        secondaryContactField.clear();
+        phoneField.clear();
+        emailField.clear();
+        secondaryPhoneField.clear();
+        secondaryEmailField.clear();
+        commentsField.clear();
     }
 }
