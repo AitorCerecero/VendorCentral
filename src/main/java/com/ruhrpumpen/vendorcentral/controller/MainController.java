@@ -26,8 +26,8 @@ public class MainController implements Initializable {
     @FXML
     private TableColumn<ListDetail, String> location;
 
-    private ObservableList<ListDetail> listDetailsList = FXCollections.observableArrayList();
-    private ListDetailDao listDetailDao = new ListDetailDao();
+    private final ObservableList<ListDetail> listDetailsList = FXCollections.observableArrayList();
+    private final ListDetailDao listDetailDao = new ListDetailDao();
 
     @FXML
     public void goToAddProvider() throws IOException {
