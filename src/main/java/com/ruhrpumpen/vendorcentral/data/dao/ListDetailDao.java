@@ -24,18 +24,21 @@ public class ListDetailDao {
      */
     public void createListDetail(ListDetail listDetails) {
         String sql = "INSERT INTO ListDetails (vendor, location, primaryContact, contactPerson, standard, telephone, secondaryContact, secondaryTelephone, secondaryEmail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, listDetails.getVendor());
-            pstmt.setString(2, listDetails.getLocation());
-            pstmt.setString(3, listDetails.getPrimaryContact());
-            pstmt.setString(4, listDetails.getContactPerson());
-            pstmt.setString(5, listDetails.getStandard());
-            pstmt.setString(6, listDetails.getTelephone());
-            pstmt.setString(7, listDetails.getSecondaryContact());
-            pstmt.setString(8, listDetails.getSecondaryTelephone());
-            pstmt.setString(9, listDetails.getSecondaryEmail());
-            pstmt.executeUpdate();
+        Connection conn; // Declara la conexión, no la cierres aquí
+        try {
+            conn = DatabaseManager.getConnection(); // Obtiene la conexión (la estática, manejada por DatabaseManager)
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) { // try-with-resources solo para el Statement
+                pstmt.setString(1, listDetails.getVendor());
+                pstmt.setString(2, listDetails.getLocation());
+                pstmt.setString(3, listDetails.getPrimaryContact());
+                pstmt.setString(4, listDetails.getContactPerson());
+                pstmt.setString(5, listDetails.getStandard());
+                pstmt.setString(6, listDetails.getTelephone());
+                pstmt.setString(7, listDetails.getSecondaryContact());
+                pstmt.setString(8, listDetails.getSecondaryTelephone());
+                pstmt.setString(9, listDetails.getSecondaryEmail());
+                pstmt.executeUpdate();
+            } // El PreparedStatement se cierra aquí automáticamente
         } catch (SQLException e) {
             System.err.println("Error al crear ListDetails: " + e.getMessage());
         }
@@ -50,26 +53,31 @@ public class ListDetailDao {
      */
     public ListDetail getListDetail(String vendor, String location) {
         String sql = "SELECT vendor, location, primaryContact, contactPerson, standard, telephone, secondaryContact, secondaryTelephone, secondaryEmail FROM ListDetails WHERE vendor = ? AND location = ?";
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, vendor);
-            pstmt.setString(2, location);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return new ListDetail(
-                        rs.getString("vendor"),
-                        rs.getString("location"),
-                        rs.getString("primaryContact"),
-                        rs.getString("contactPerson"),
-                        rs.getString("standard"),
-                        rs.getString("telephone"),
-                        rs.getString("secondaryContact"),
-                        rs.getString("secondaryTelephone"),
-                        rs.getString("secondaryEmail")
-                );
-            }
+        Connection conn; // Declara la conexión, no la cierres aquí
+        try {
+            conn = DatabaseManager.getConnection(); // Obtiene la conexión
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) { // try-with-resources para Statement
+                pstmt.setString(1, vendor);
+                pstmt.setString(2, location);
+                try (ResultSet rs = pstmt.executeQuery()) { // try-with-resources para ResultSet
+                    if (rs.next()) {
+                        return new ListDetail(
+                                rs.getString("vendor"),
+                                rs.getString("location"),
+                                rs.getString("primaryContact"),
+                                rs.getString("contactPerson"),
+                                rs.getString("standard"),
+                                rs.getString("telephone"),
+                                rs.getString("secondaryContact"),
+                                rs.getString("secondaryTelephone"),
+                                rs.getString("secondaryEmail")
+                        );
+                    }
+                } // ResultSet se cierra aquí
+            } // PreparedStatement se cierra aquí
         } catch (SQLException e) {
             System.err.println("Error al obtener ListDetails: " + e.getMessage());
+            // throw new RuntimeException(e);
         }
         return null;
     }
@@ -82,18 +90,21 @@ public class ListDetailDao {
      */
     public void updateListDetail(ListDetail listDetails) {
         String sql = "UPDATE ListDetails SET primaryContact = ?, contactPerson = ?, standard = ?, telephone = ?, secondaryContact = ?, secondaryTelephone = ?, secondaryEmail = ? WHERE vendor = ? AND location = ?";
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, listDetails.getPrimaryContact());
-            pstmt.setString(2, listDetails.getContactPerson());
-            pstmt.setString(3, listDetails.getStandard());
-            pstmt.setString(4, listDetails.getTelephone());
-            pstmt.setString(5, listDetails.getSecondaryContact());
-            pstmt.setString(6, listDetails.getSecondaryTelephone());
-            pstmt.setString(7, listDetails.getSecondaryEmail());
-            pstmt.setString(8, listDetails.getVendor());
-            pstmt.setString(9, listDetails.getLocation());
-            pstmt.executeUpdate();
+        Connection conn; // Declara la conexión
+        try {
+            conn = DatabaseManager.getConnection(); // Obtiene la conexión
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) { // try-with-resources para Statement
+                pstmt.setString(1, listDetails.getPrimaryContact());
+                pstmt.setString(2, listDetails.getContactPerson());
+                pstmt.setString(3, listDetails.getStandard());
+                pstmt.setString(4, listDetails.getTelephone()); // Índice 4 para telephone
+                pstmt.setString(5, listDetails.getSecondaryContact()); // Índice 5 para secondaryContact
+                pstmt.setString(6, listDetails.getSecondaryTelephone()); // Índice 6 para secondaryTelephone
+                pstmt.setString(7, listDetails.getSecondaryEmail()); // Índice 7 para secondaryEmail
+                pstmt.setString(8, listDetails.getVendor()); // Índice 8 para vendor (WHERE clause)
+                pstmt.setString(9, listDetails.getLocation()); // Índice 9 para location (WHERE clause)
+                pstmt.executeUpdate();
+            } // El PreparedStatement se cierra aquí
         } catch (SQLException e) {
             System.err.println("Error al actualizar ListDetails: " + e.getMessage());
         }
@@ -107,11 +118,14 @@ public class ListDetailDao {
      */
     public void deleteListDetail(String vendor, String location) {
         String sql = "DELETE FROM ListDetails WHERE vendor = ? AND location = ?";
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, vendor);
-            pstmt.setString(2, location);
-            pstmt.executeUpdate();
+        Connection conn; // Declara la conexión
+        try {
+            conn = DatabaseManager.getConnection(); // Obtiene la conexión
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) { // try-with-resources para Statement
+                pstmt.setString(1, vendor);
+                pstmt.setString(2, location);
+                pstmt.executeUpdate();
+            } // PreparedStatement se cierra aquí
         } catch (SQLException e) {
             System.err.println("Error al eliminar ListDetails: " + e.getMessage());
         }
@@ -125,23 +139,26 @@ public class ListDetailDao {
     public List<ListDetail> getAllListDetails() {
         List<ListDetail> detalles = new ArrayList<>();
         String sql = "SELECT vendor, location, primaryContact, contactPerson, standard, telephone, secondaryContact, secondaryTelephone, secondaryEmail FROM ListDetails";
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                ListDetail detalle = new ListDetail(
-                        rs.getString("vendor"),
-                        rs.getString("location"),
-                        rs.getString("primaryContact"),
-                        rs.getString("contactPerson"),
-                        rs.getString("standard"),
-                        rs.getString("telephone"),
-                        rs.getString("secondaryContact"),
-                        rs.getString("secondaryTelephone"),
-                        rs.getString("secondaryEmail")
-                );
-                detalles.add(detalle);
-            }
+        Connection conn; // Declara la conexión
+        try {
+            conn = DatabaseManager.getConnection(); // Obtiene la conexión
+            try (PreparedStatement pstmt = conn.prepareStatement(sql); // try-with-resources para Statement y ResultSet
+                 ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    ListDetail detalle = new ListDetail(
+                            rs.getString("vendor"),
+                            rs.getString("location"),
+                            rs.getString("primaryContact"),
+                            rs.getString("contactPerson"),
+                            rs.getString("standard"),
+                            rs.getString("telephone"),
+                            rs.getString("secondaryContact"),
+                            rs.getString("secondaryTelephone"),
+                            rs.getString("secondaryEmail")
+                    );
+                    detalles.add(detalle);
+                }
+            } // PreparedStatement y ResultSet se cierran aquí
         } catch (SQLException e) {
             System.err.println("Error al obtener todos los ListDetails: " + e.getMessage());
         }
