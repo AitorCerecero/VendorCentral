@@ -10,8 +10,9 @@ public class ListDetail {
     private String secondaryContact;
     private String secondaryTelephone;
     private String secondaryEmail;
+    private String comments;
 
-    public ListDetail(String vendor, String location, String primaryContact, String contactPerson, String standard, String telephone, String secondaryContact, String secondaryTelephone, String secondaryEmail) {
+    public ListDetail(String vendor, String location, String primaryContact, String contactPerson, String standard, String telephone, String secondaryContact, String secondaryTelephone, String secondaryEmail, String comments) {
         this.vendor = vendor;
         this.location = location;
         this.primaryContact = primaryContact;
@@ -21,19 +22,7 @@ public class ListDetail {
         this.secondaryContact = secondaryContact;
         this.secondaryTelephone = secondaryTelephone;
         this.secondaryEmail = secondaryEmail;
-    }
-
-    // Modifica el constructor para incluir primaryContact
-    public ListDetail(String vendor, String location, String primaryContact) {
-        this.vendor = vendor;
-        this.location = location;
-        this.primaryContact = primaryContact;
-    }
-
-    // Sobrecarga el constructor si necesitas crear instancias sin primaryContact inicialmente
-    public ListDetail(String vendor, String location) {
-        this.vendor = vendor;
-        this.location = location;
+        this.comments = comments;
     }
 
     public String getVendor() {
@@ -106,5 +95,13 @@ public class ListDetail {
 
     public void setSecondaryEmail(String secondaryEmail) {
         this.secondaryEmail = secondaryEmail;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

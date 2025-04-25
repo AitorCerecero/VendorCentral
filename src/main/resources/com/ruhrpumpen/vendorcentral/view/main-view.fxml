@@ -41,8 +41,8 @@
     </HBox>
     <TableView fx:id="mainTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="vendor" prefWidth="102.0" text="ID" />
-            <TableColumn fx:id="location" prefWidth="359.0" text="Nombre del proovedor" />
+            <TableColumn fx:id="vendor" prefWidth="359.0" text="Nombre del proovedor" />
+            <TableColumn fx:id="location" prefWidth="102.0" text="Localizacion" />
         </columns>
         <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
