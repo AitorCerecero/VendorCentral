@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="718.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="400.0">
+        <Button mnemonicParsing="false" onAction="#goToMain" text="Regresar">
+            <graphic>
+                <FontIcon iconLiteral="fas-arrow-left" />
+            </graphic>
+            <padding>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            </padding>
+            <HBox.margin>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            </HBox.margin>
+        </Button>
+        <Region HBox.hgrow="ALWAYS" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Detalle del proveedor" textAlignment="CENTER" HBox.hgrow="NEVER">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Text>
+        <Region HBox.hgrow="ALWAYS">
+            <HBox.margin>
+                <Insets bottom="8.0" left="24.0" right="24.0" top="8.0" />
+            </HBox.margin>
+            <padding>
+                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+            </padding></Region>
+    </HBox>
+    <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="718.0">
+        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="400.0">
+            <Label fx:id="vendorLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" textAlignment="CENTER" wrapText="true" HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                </HBox.margin>
+                <padding>
+                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                </padding>
+                <font>
+                    <Font name="System Bold" size="13.0" />
+                </font>
+            </Label>
+            <Label fx:id="categoryLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" wrapText="true" HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                </HBox.margin>
+                <padding>
+                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                </padding>
+                <font>
+                    <Font name="System Bold" size="13.0" />
+                </font>
+            </Label>
+            <Label fx:id="locationLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="377.0" layoutY="44.0" maxWidth="1.7976931348623157E308" wrapText="true" HBox.hgrow="ALWAYS">
+                <padding>
+                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                </padding>
+                <font>
+                    <Font name="System Bold" size="13.0" />
+                </font>
+                <HBox.margin>
+                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                </HBox.margin>
+            </Label>
+        </HBox>
+      <Label fx:id="primaryContact" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" textAlignment="CENTER" wrapText="true">
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="secondaryContact" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" textAlignment="CENTER" wrapText="true">
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+        <HBox prefHeight="100.0" prefWidth="200.0">
+            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                <Label fx:id="phone" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
+                       textAlignment="CENTER" wrapText="true">
+                   <padding>
+                       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                   </padding>
+                   <font>
+                       <Font name="System Bold" size="13.0"/>
+                   </font>
+                   <VBox.margin>
+                       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                   </VBox.margin>
+                </Label>
+                <Label fx:id="email" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
+                       textAlignment="CENTER" wrapText="true">
+                   <padding>
+                       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                   </padding>
+                   <font>
+                       <Font name="System Bold" size="13.0"/>
+                   </font>
+                   <VBox.margin>
+                       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                   </VBox.margin>
+                </Label>
+            </VBox>
+            <VBox layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                <Label fx:id="secondaryPhone" alignment="CENTER" contentDisplay="CENTER"
+                       maxWidth="1.7976931348623157E308" textAlignment="CENTER" wrapText="true">
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                    </padding>
+                    <font>
+                        <Font name="System Bold" size="13.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                    </VBox.margin>
+                </Label>
+                <Label fx:id="secondaryEmail" alignment="CENTER" contentDisplay="CENTER"
+                       maxWidth="1.7976931348623157E308" textAlignment="CENTER" wrapText="true">
+                    <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                    </padding>
+                    <font>
+                        <Font name="System Bold" size="13.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                    </VBox.margin>
+                </Label>
+            </VBox>
+        </HBox>
+      <Label fx:id="comments" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" textAlignment="CENTER" wrapText="true">
+         <padding>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </padding>
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </VBox.margin>
+      </Label>
+    </VBox>
+</VBox>

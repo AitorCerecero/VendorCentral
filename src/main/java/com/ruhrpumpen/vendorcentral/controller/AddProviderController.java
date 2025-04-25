@@ -70,8 +70,8 @@ public class AddProviderController implements Initializable {
                 category,
                 phone,
                 email,
-                secondaryPhone,
                 secondaryEmail,
+                secondaryPhone,
                 comments
         );
 

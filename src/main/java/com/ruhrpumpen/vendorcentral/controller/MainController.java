@@ -46,10 +46,29 @@ public class MainController implements Initializable {
 
         // Enlazar la ObservableList con la TableView
         mainTable.setItems(listDetailsList);
+
+        mainTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && mainTable.getSelectionModel().getSelectedItem() != null) {
+                ListDetail selected = mainTable.getSelectionModel().getSelectedItem();
+                openDetailView(selected.getVendor(), selected.getLocation());
+            }
+        });
     }
 
     private void cargarDatosTabla() {
         List<ListDetail> todosLosDetalles = listDetailDao.getAllListDetails();
         listDetailsList.addAll(todosLosDetalles);
     }
+
+    private void openDetailView(String vendor, String location) {
+        try {
+            ProviderController providerController = new ProviderController();
+            providerController.setVendorAndLocation(vendor, location);
+
+            Navigator.navigateToWithController("/com/ruhrpumpen/vendorcentral/view/provider-view.fxml", providerController);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

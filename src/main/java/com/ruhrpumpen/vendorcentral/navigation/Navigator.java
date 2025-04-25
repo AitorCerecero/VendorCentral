@@ -20,4 +20,13 @@ public class Navigator {
         mainStage.setScene(new Scene(root));
         mainStage.show();
     }
+
+    public static void navigateToWithController(String fxmlPath, Object controller) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Navigator.class.getResource(fxmlPath));
+        loader.setLocation(Objects.requireNonNull(Navigator.class.getResource(fxmlPath)));
+        loader.setController(controller);
+        Parent root = loader.load();
+        mainStage.setScene(new Scene(root));
+        mainStage.show();
+    }
 }
