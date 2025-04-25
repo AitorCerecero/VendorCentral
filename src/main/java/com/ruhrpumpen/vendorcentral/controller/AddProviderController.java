@@ -3,7 +3,6 @@ package com.ruhrpumpen.vendorcentral.controller;
 import com.ruhrpumpen.vendorcentral.data.dao.ListDetailDao;
 import com.ruhrpumpen.vendorcentral.model.ListDetail;
 import com.ruhrpumpen.vendorcentral.navigation.Navigator;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
@@ -11,26 +10,28 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 
-public class AddProviderController {
+public class AddProviderController implements Initializable {
 
-    private final ListDetailDao listDetailDao;
+    private ListDetailDao listDetailDao;
 
-    public AddProviderController() {
-        // Instancia del DAO para acceso a la base de datos
-        listDetailDao = new ListDetailDao();
+    @FXML
+    public void goToMain() throws IOException {
+        Navigator.navigateTo("/com/ruhrpumpen/vendorcentral/view/main-view.fxml");
     }
 
-    /**
-     * Crea un nuevo vendor con datos generados automáticamente y lo guarda en la base de datos.
-     */
-    public void crearNuevoVendor() {
-        // Generar valores únicos y ficticios
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        listDetailDao = new ListDetailDao(); // Inicializa el ListDetailsDAO
+
+        // Crear un nuevo ListDetails cada vez que se inicializa el controlador
+        crearNuevoListDetails();
+    }
+
+    private void crearNuevoListDetails() {
+        // Generar valores de ejemplo para el nuevo ListDetails
         String nuevoVendor = "Vendor-" + UUID.randomUUID().toString().substring(0, 8);
-        String nuevoLocation = "Location-" + UUID.randomUUID().toString().substring(0, 8);
+        String nuevaLocation = "Location-" + UUID.randomUUID().toString().substring(0, 8);
         String nuevoPrimaryContact = "Contacto-" + UUID.randomUUID().toString().substring(0, 8);
         String nuevoContactPerson = "Persona-" + UUID.randomUUID().toString().substring(0, 8);
         String nuevoStandard = "Standard-" + UUID.randomUUID().toString().substring(0, 4);
@@ -39,10 +40,10 @@ public class AddProviderController {
         String nuevoSecondaryTelephone = "SecTel-" + UUID.randomUUID().toString().substring(0, 6);
         String nuevoSecondaryEmail = UUID.randomUUID().toString().substring(0, 10) + "@example.com";
 
-        // Crear objeto vendor
-        ListDetail nuevoVendorDetalle = new ListDetail(
+        // Crear un nuevo objeto ListDetails
+        ListDetail nuevoDetalle = new ListDetail(
                 nuevoVendor,
-                nuevoLocation,
+                nuevaLocation,
                 nuevoPrimaryContact,
                 nuevoContactPerson,
                 nuevoStandard,
@@ -52,42 +53,10 @@ public class AddProviderController {
                 nuevoSecondaryEmail
         );
 
-        // Guardar en base de datos
-        listDetailDao.createListDetail(nuevoVendorDetalle);
+        // Guardar el nuevo ListDetails en la base de datos
+        listDetailDao.createListDetail(nuevoDetalle);
 
-        System.out.println("Vendor creado: " + nuevoVendor + " en " + nuevoLocation);
-    }
-
-    /**
-     * Lista todos los vendors existentes en la base de datos.
-     */
-    public void listarVendors() {
-        List<ListDetail> vendors = listDetailDao.getAllListDetails();
-        for (ListDetail v : vendors) {
-            System.out.println("Vendor: " + v.getVendor() + ", Ubicación: " + v.getLocation());
-        }
-    }
-
-    /**
-     * Borra un vendor dado su nombre y localización.
-     */
-    public void eliminarVendor(String vendor, String location) {
-        listDetailDao.deleteListDetail(vendor, location);
-        System.out.println("Vendor eliminado: " + vendor + " en " + location);
-    }
-
-    /**
-     * Actualiza los datos de un vendor existente.
-     */
-    public void actualizarVendor(ListDetail vendorActualizado) {
-        listDetailDao.updateListDetail(vendorActualizado);
-        System.out.println("Vendor actualizado: " + vendorActualizado.getVendor());
-    }
-
-    /**
-     * Método de navegación a la vista principal.
-     */
-    public void irAVistaPrincipal() throws IOException {
-        Navigator.navigateTo("/com/ruhrpumpen/vendorcentral/view/main-view.fxml");
+        System.out.println("Nuevo ListDetails creado para Vendor: " + nuevoVendor + ", Location: " + nuevaLocation);
+        // O podrías mostrar una notificación al usuario
     }
 }
