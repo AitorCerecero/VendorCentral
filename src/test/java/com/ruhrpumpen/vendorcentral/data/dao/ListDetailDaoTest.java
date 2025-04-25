@@ -32,6 +32,7 @@ public class ListDetailDaoTest {
                 secondaryContact TEXT,
                 secondaryTelephone TEXT,
                 secondaryEmail TEXT,
+                comments TEXT,
                 PRIMARY KEY (vendor, location)
             )
         """);
@@ -44,7 +45,7 @@ public class ListDetailDaoTest {
     void crearYObtenerUnDetalleDeberiaRetornarRegistroIngresado() {
         ListDetail detail = new ListDetail(
                 "VendorA", "LocationA", "Aitor", "Cerecero",
-                "ISO9005", "123456", "Ricardo", "654321", "ricardo@example.com"
+                "ISO9005", "123456", "Ricardo", "654321", "ricardo@example.com", "Example"
         );
 
         dao.createListDetail(detail);
@@ -57,7 +58,7 @@ public class ListDetailDaoTest {
 
     @Test
     void actualizarRegistoDebeModificarElRegistro() {
-        ListDetail detail = new ListDetail("VendorB", "LocationB", "A", "B", "C", "D", "E", "F", "G");
+        ListDetail detail = new ListDetail("VendorB", "LocationB", "A", "B", "C", "D", "E", "F", "G", "");
         dao.createListDetail(detail);
 
         detail.setPrimaryContact("RicardoDB");
@@ -69,7 +70,7 @@ public class ListDetailDaoTest {
 
     @Test
     void borrarRegistroDebeQuitarloDeLaDB() {
-        ListDetail detail = new ListDetail("VendorX", "LocationY", "A", "B", "C", "D", "E", "F", "G");
+        ListDetail detail = new ListDetail("VendorX", "LocationY", "A", "B", "C", "D", "E", "F", "G", "");
         dao.createListDetail(detail);
 
         dao.deleteListDetail("VendorX", "LocationY");
@@ -78,9 +79,9 @@ public class ListDetailDaoTest {
 
     @Test
     void obtenerTodosLosRegistrosDebeRetornarMultiplesRegistrosgetAllListDetails_shouldReturnMultipleRecords() {
-        dao.createListDetail(new ListDetail("Vendor1", "Loc1", "A", "B", "C", "D", "E", "F", "G"));
-        dao.createListDetail(new ListDetail("Vendor2", "Loc2", "X", "Y", "Z", "W", "V", "U", "T"));
-        dao.createListDetail(new ListDetail("Vendor3", "Loc3", "X", "Y", "Z", "W", "V", "U", "T"));
+        dao.createListDetail(new ListDetail("Vendor1", "Loc1", "A", "B", "C", "D", "E", "F", "G", ""));
+        dao.createListDetail(new ListDetail("Vendor2", "Loc2", "X", "Y", "Z", "W", "V", "U", "T", ""));
+        dao.createListDetail(new ListDetail("Vendor3", "Loc3", "X", "Y", "Z", "W", "V", "U", "T", ""));
 
         List<ListDetail> list = dao.getAllListDetails();
 

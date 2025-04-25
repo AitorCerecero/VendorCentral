@@ -52,7 +52,7 @@ public class ListDetailDao {
      * @return Un objeto {@link ListDetail} si se encuentra un registro coincidente, null en caso contrario.
      */
     public ListDetail getListDetail(String vendor, String location) {
-        String sql = "SELECT vendor, location, primaryContact, contactPerson, standard, telephone, secondaryContact, secondaryTelephone, secondaryEmail FROM ListDetails WHERE vendor = ? AND location = ?";
+        String sql = "SELECT vendor, location, primaryContact, contactPerson, standard, telephone, secondaryContact, secondaryTelephone, secondaryEmail, comments FROM ListDetails WHERE vendor = ? AND location = ?";
         Connection conn; // Declara la conexión, no la cierres aquí
         try {
             conn = DatabaseManager.getConnection(); // Obtiene la conexión
@@ -70,7 +70,8 @@ public class ListDetailDao {
                                 rs.getString("telephone"),
                                 rs.getString("secondaryContact"),
                                 rs.getString("secondaryTelephone"),
-                                rs.getString("secondaryEmail")
+                                rs.getString("secondaryEmail"),
+                                rs.getString("comments")
                         );
                     }
                 } // ResultSet se cierra aquí
@@ -89,7 +90,7 @@ public class ListDetailDao {
      * @param listDetails El objeto {@link ListDetail} con los datos actualizados.
      */
     public void updateListDetail(ListDetail listDetails) {
-        String sql = "UPDATE ListDetails SET primaryContact = ?, contactPerson = ?, standard = ?, telephone = ?, secondaryContact = ?, secondaryTelephone = ?, secondaryEmail = ? WHERE vendor = ? AND location = ?";
+        String sql = "UPDATE ListDetails SET primaryContact = ?, contactPerson = ?, standard = ?, telephone = ?, secondaryContact = ?, secondaryTelephone = ?, secondaryEmail = ?, comments = ? WHERE vendor = ? AND location = ?";
         Connection conn; // Declara la conexión
         try {
             conn = DatabaseManager.getConnection(); // Obtiene la conexión
@@ -101,8 +102,9 @@ public class ListDetailDao {
                 pstmt.setString(5, listDetails.getSecondaryContact()); // Índice 5 para secondaryContact
                 pstmt.setString(6, listDetails.getSecondaryTelephone()); // Índice 6 para secondaryTelephone
                 pstmt.setString(7, listDetails.getSecondaryEmail()); // Índice 7 para secondaryEmail
-                pstmt.setString(8, listDetails.getVendor()); // Índice 8 para vendor (WHERE clause)
-                pstmt.setString(9, listDetails.getLocation()); // Índice 9 para location (WHERE clause)
+                pstmt.setString(8, listDetails.getComments()); // Índice 8 para comments
+                pstmt.setString(9, listDetails.getVendor()); // Índice 9 para vendor (WHERE clause)
+                pstmt.setString(10, listDetails.getLocation()); // Índice 10 para location (WHERE clause)
                 pstmt.executeUpdate();
             } // El PreparedStatement se cierra aquí
         } catch (SQLException e) {
@@ -138,7 +140,7 @@ public class ListDetailDao {
      */
     public List<ListDetail> getAllListDetails() {
         List<ListDetail> detalles = new ArrayList<>();
-        String sql = "SELECT vendor, location, primaryContact, contactPerson, standard, telephone, secondaryContact, secondaryTelephone, secondaryEmail FROM ListDetails";
+        String sql = "SELECT vendor, location, primaryContact, contactPerson, standard, telephone, secondaryContact, secondaryTelephone, secondaryEmail, comments FROM ListDetails";
         Connection conn; // Declara la conexión
         try {
             conn = DatabaseManager.getConnection(); // Obtiene la conexión
@@ -154,7 +156,8 @@ public class ListDetailDao {
                             rs.getString("telephone"),
                             rs.getString("secondaryContact"),
                             rs.getString("secondaryTelephone"),
-                            rs.getString("secondaryEmail")
+                            rs.getString("secondaryEmail"),
+                            rs.getString("comments")
                     );
                     detalles.add(detalle);
                 }

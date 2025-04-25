@@ -72,7 +72,7 @@ public class DatabaseManager {
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS Locations (locationName TEXT PRIMARY KEY, projectBiddingLocation TEXT, coveredCountries TEXT)");
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS VendorDivisions (vendorName TEXT, divisionName TEXT, PRIMARY KEY (vendorName, divisionName), FOREIGN KEY (vendorName) REFERENCES Vendor(vendorName), FOREIGN KEY (divisionName) REFERENCES Divisions(divisionName))");
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS VendorCategoryVendors (categoryName TEXT, vendorName TEXT, PRIMARY KEY (categoryName, vendorName), FOREIGN KEY (categoryName) REFERENCES VendorCategory(categoryName), FOREIGN KEY (vendorName) REFERENCES Vendor(vendorName))");
-            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ListDetails (vendor TEXT, location TEXT, primaryContact TEXT, contactPerson TEXT, standard TEXT, telephone TEXT, secondaryContact TEXT, secondaryTelephone TEXT, secondaryEmail TEXT, PRIMARY KEY (vendor, location), FOREIGN KEY (vendor) REFERENCES Vendor(vendorName), FOREIGN KEY (location) REFERENCES Locations(locationName))");
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ListDetails (vendor TEXT, location TEXT, primaryContact TEXT, contactPerson TEXT, standard TEXT, telephone TEXT, secondaryContact TEXT, secondaryTelephone TEXT, secondaryEmail TEXT, comments TEXT, PRIMARY KEY (vendor, location), FOREIGN KEY (vendor) REFERENCES Vendor(vendorName), FOREIGN KEY (location) REFERENCES Locations(locationName))");
 
             System.out.println("Tablas creadas o ya existentes.");
 

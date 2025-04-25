@@ -6,13 +6,13 @@ import com.ruhrpumpen.vendorcentral.navigation.Navigator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 public class AddProviderController implements Initializable {
 
@@ -29,6 +29,8 @@ public class AddProviderController implements Initializable {
     @FXML private TextField secondaryPhoneField;
     @FXML private TextField secondaryEmailField;
     @FXML private TextArea commentsField;
+
+    @FXML private Label errorLabel;
 
     @FXML
     public void goToMain() throws IOException {
@@ -53,21 +55,24 @@ public class AddProviderController implements Initializable {
         String secondaryEmail = secondaryEmailField.getText();
         String comments = commentsField.getText();
 
-        if (name.isBlank() || location.isBlank()) {
-            System.out.println("Faltan campos obligatorios.");
+        if (name.isBlank() || location.isBlank() || category.isBlank()) {
+            errorLabel.setText("El nombre, categoria y localizacion son obligatorios.");
             return;
         }
+
+        errorLabel.setText(""); // Limpiar errores
 
         ListDetail nuevoProveedor = new ListDetail(
                 name,
                 location,
                 primaryContact,
                 secondaryContact,
-                category, // Puedes usar este campo como estándar o ajustarlo
+                category,
                 phone,
                 email,
                 secondaryPhone,
-                secondaryEmail
+                secondaryEmail,
+                comments
         );
 
         listDetailDao.createListDetail(nuevoProveedor);
