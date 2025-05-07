@@ -90,7 +90,7 @@ En base a la siguiente [documentación](https://openjfx.io/openjfx-docs/) hacemo
 
    Para **Windows**:
     ```text
-    --module-path "\path\to\javafx-sdk-21.0.5\lib" --add-modules javafx.controls,javafx.fxml
+    --module-path "\path\to\javafx-sdk-21.0.6\lib" --add-modules javafx.controls,javafx.fxml
     ```
    Para **MacOS**:
     ```text
@@ -100,23 +100,117 @@ En base a la siguiente [documentación](https://openjfx.io/openjfx-docs/) hacemo
 
 ## Empaquetar la aplicación
 
-> [!NOTE]
-> Por hacer
+Este proyecto puede ser convertido en un instalador .exe utilizando la herramienta jpackage, disponible a partir de JDK
+A continuación se describen los pasos para generar un instalador de la aplicación.
+
+### Requisitos
+
+- JDK 14 o superior (recomendado JDK 17+)
+- Sistema operativo Windows
+- Gradle configurado para generar un `.jar` ejecutable
+
+Puedes verificar tu versión de Java con:
+
+```bash
+java --version
+```
+
+### Generar el `.jar`
+
+Ejecuta el siguiente comando para construir el proyecto y generar el `.jar`:
+
+```bash
+./gradlew clean build
+```
+
+El `.jar` se generará en:
+
+```text
+build/libs/vendorcentral-1.0.jar
+```
+
+### Crear el instalador `.exe`
+
+Ejecuta el siguiente comando desde la raíz del proyecto:
+
+```bash
+jpackage --input build/libs \
+         --name VendorCentral \
+         --main-jar vendorcentral-1.0.jar \
+         --main-class com.ruhrpumpen.vendorcentral.MainApplication \
+         --type exe \
+         --icon src/main/resources/com/ruhrpumpen/vendorcentral/assets/rp/icon.ico \
+         --java-options "-Xmx512m"
+```
+
+### Resultado
+
+Se generará una carpeta `VendorCentral/` con el ejecutable y archivos relacionados.
+El instalador `.exe` estará dentro, listo para distribuir.
 
 ## Instalación del proyecto
 
-> [!NOTE]
-> Por hacer
+Puedes instalar VendorCentral usando el instalador `.exe` disponible en la sección de Releases del proyecto.
+
+### Descargar el instalador
+
+1. Ve a la página del proyecto (GitHub, GitLab, etc.).
+2. Haz clic en la pestaña Releases.
+3. Descarga el archivo .exe más reciente:
+
+O entra al siguiente link para poder ir a [relases](https://github.com/AitorCerecero/VendorCentral/releases) y descarga
+la ultima disponible.
+
+### Ejecutar el instalador
+
+1. Ubica el archivo descargado (`VendorCentral-1.0.0.exe`) en tu carpeta de descargas.
+
+2. Haz doble clic en el archivo para iniciar el instalador.
+3. Sigue los pasos del asistente:
+    - Acepta los términos y condiciones.
+    - Elige la carpeta de instalación.
+    - Espera a que termine la instalación.
+
+### Iniciar la aplicación
+
+Una vez instalada, puedes iniciar VendorCentral:
+
+- Desde el acceso directo en el escritorio.
+- Desde el menú Inicio → VendorCentral.
+- Ejecutando el `.exe` instalado en la carpeta que elegiste.
+
+### Notas importantes
+
+- No necesitas instalar Java manualmente. El instalador incluye todo lo necesario para ejecutar la aplicación.
+- Al no estar firmada la aplicacion, si Windows bloquea el instalador (SmartScreen), haz clic en Más información →
+  Ejecutar de todas formas.
+- Para actualizar, simplemente descarga e instala la nueva versión desde Releases.
 
 ## Estructura del proyecto
+
+VendorCentral es una aplicación Java organizada bajo el patrón MVC (Modelo-Vista-Controlador).
+
+* **Controller:** Contiene la lógica de negocio de la aplicación.
+* **Model:** Define los modelos de datos usados en todo el sistema.
+* **View:** Incluye las interfaces gráficas en archivos FXML.
+* **Data/DAO:** Maneja la configuración y comunicación con la base de datos (CRUD).
+* **MainApplication.java:** Es el punto de entrada de la aplicación.
+* **Assets:** Guarda los recursos gráficos y otros archivos utilizados.
+* **Tests:** Contiene pruebas automatizadas para validar el comportamiento del sistema.
+* **build.gradle:** Archivo de configuración del proyecto con Gradle.
 
 ```text
 /VendorCentral/
 │── src/main/java/com/ruhrpumpen/vendorcentral/
+│   │── controller/     # Logica de negocio de la aplicacion
+│   │── data/           # Configuracion de la DB
+│       │── dao/        # Comunicacion con la DB, consultas CRUD
+│   │── model/          # Diferentes modelos usados a lo largo de la aplicacion
 │   ├── MainApplication.java   # Punto de entrada de la aplicación
-│   ├── MainController.java    # Lógica de negocio
 │── src/main/resources/com/ruhrpumpen/vendorcentral/
-│   ├── main-view.fxml # Diseño de UI en FXML
-│── build.gradle.kts      # Configuración de Gradle
-│── README.md             # Este archivo 
+│   │── assets.rp/      # Assets usados en la aplicacion
+│   │── view/           # Diseños de UI en FXML
+│── src/test/java/com/ruhrpumpen/vendorcentral/ # Contiene los diferentes test hechos
+│── build.gradle        # Configuración de Gradle
+│── README.md           # Este archivo 
 ```
